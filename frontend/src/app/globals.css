@@ -43,6 +43,54 @@ a {
   z-index: 100;
 }
 
+.navbar-content {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: opacity 0.2s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.85;
+}
+
+.logo-svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo-svg {
+  transform: scale(1.05);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  font-weight: 500;
+  color: #d4af37;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
 .navbar h1 {
   font-size: 28px;
   font-weight: 600;
@@ -269,6 +317,25 @@ a {
 }
 
 @media (max-width: 768px) {
+  .logo-link {
+    gap: 12px;
+  }
+
+  .logo-svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-name {
+    font-size: 26px;
+    letter-spacing: 1.5px;
+  }
+
+  .brand-tagline {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
   .product-detail-grid {
     grid-template-columns: 1fr;
     gap: 30px;

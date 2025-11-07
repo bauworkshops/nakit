@@ -361,6 +361,10 @@ sudo systemctl start pocketbase
 sudo systemctl status pocketbase
 ```
 
+### Fly.io deployment
+
+Deployment to Fly.io following official guide: https://github.com/pocketbase/pocketbase/discussions/537
+
 ### Nginx reverse proxy
 
 ```nginx
