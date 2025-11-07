@@ -1,5 +1,8 @@
 'use client';
 
+// Text constants
+const LOADING_TEXT = 'Loading...';
+
 export default function Loading() {
   return (
     <div className="loading">
@@ -13,7 +16,7 @@ export default function Loading() {
           animation: 'spin 1s linear infinite',
           margin: '0 auto 20px'
         }} />
-        <p style={{ color: '#999', fontSize: '18px' }}>Загрузка...</p>
+        <p style={{ color: '#999', fontSize: '18px' }}>{LOADING_TEXT}</p>
       </div>
       <style jsx>{`
         @keyframes spin {

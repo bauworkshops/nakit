@@ -2,6 +2,9 @@
 
 import { Navbar } from '@/components/Navbar';
 
+// Text constants
+const LOADING_PRODUCT_TEXT = 'Loading product...';
+
 export default function Loading() {
   return (
     <div>
@@ -17,7 +20,7 @@ export default function Loading() {
             animation: 'spin 1s linear infinite',
             margin: '0 auto 20px'
           }} />
-          <p style={{ color: '#999', fontSize: '18px' }}>Загрузка товара...</p>
+          <p style={{ color: '#999', fontSize: '18px' }}>{LOADING_PRODUCT_TEXT}</p>
         </div>
         <style jsx>{`
           @keyframes spin {

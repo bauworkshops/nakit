@@ -2,6 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Product, getImageUrl } from '@/lib/pocketbase';
 
+// Text constants
+const LOCALE = 'en-US';
+
 interface ProductCardProps {
   product: Product;
 }
@@ -25,7 +28,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="product-info">
           <h3 className="product-title">{product.title}</h3>
-          <p className="product-price">{product.price.toLocaleString('ru-RU')} ₽</p>
+          <p className="product-price">{product.price.toLocaleString(LOCALE)} ₽</p>
         </div>
       </div>
     </Link>
