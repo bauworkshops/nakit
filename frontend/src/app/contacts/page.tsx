@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/Navbar';
+import { GoogleMap } from '@/components/GoogleMap';
 import { pb, Registry } from '@/lib/pocketbase';
 import styles from './page.module.scss';
 
@@ -82,12 +83,11 @@ export default async function ContactsPage() {
           </div>
           
           <div className={styles.mapWrapper}>
-            <iframe
-              className={styles.map}
-              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM40wrMzknNTQuMyJOIDczwrA1OScwNy44Ilc!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+            <GoogleMap
+              lat={parseFloat(lat)}
+              lng={parseFloat(lng)}
               title="Location map"
+              className={styles.map}
             />
           </div>
         </div>

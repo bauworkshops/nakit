@@ -33,6 +33,9 @@ export interface Shop {
   address?: string;
   phone?: string;
   coordinates?: string;
+  email?: string;
+  preview_image?: string;
+  working_hours?: string;
   created: string;
   updated: string;
 }

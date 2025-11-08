@@ -417,6 +417,52 @@
         "type": "text"
       },
       {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "shopemail001",
+        "max": 0,
+        "min": 0,
+        "name": "email",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "shoppreview1",
+        "maxSelect": 1,
+        "maxSize": 5242880,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ],
+        "name": "preview_image",
+        "presentable": false,
+        "protected": false,
+        "required": false,
+        "system": false,
+        "thumbs": [],
+        "type": "file"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "shopworkhrs1",
+        "max": 0,
+        "min": 0,
+        "name": "working_hours",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
         "hidden": false,
         "id": "autodate_created",
         "name": "created",
