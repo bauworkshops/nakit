@@ -1,0 +1,27 @@
+// Shared utility classes
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #999;
+}
+
+.error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #e74c3c;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  color: #999;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+}
+
