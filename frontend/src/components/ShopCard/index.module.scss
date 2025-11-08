@@ -24,7 +24,7 @@
   font-size: 22px;
   font-weight: 600;
   margin: 0 0 16px 0;
-  color: #222;
+  color: var(--color-text-dark);
 }
 
 .infoRow {
@@ -37,15 +37,15 @@
 
 .label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-text);
 }
 
 .value {
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .noInfo {
-  color: #999;
+  color: var(--color-text-light);
   font-size: 14px;
   margin: 0;
 }

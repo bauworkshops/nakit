@@ -10,7 +10,7 @@
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 32px;
-  color: #222;
+  color: var(--color-text-dark);
 }
 
 .content {
@@ -31,12 +31,12 @@
   font-size: 28px;
   font-weight: 600;
   margin: 0 0 12px 0;
-  color: #222;
+  color: var(--color-text-dark);
 }
 
 .subtitle {
   font-size: 16px;
-  color: #666;
+  color: var(--color-text);
   margin: 0 0 32px 0;
   line-height: 1.6;
 }
@@ -54,24 +54,24 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #999;
+  color: var(--color-text-light);
   margin: 0 0 8px 0;
 }
 
 .value {
   font-size: 16px;
-  color: #333;
+  color: var(--color-text-dark);
   margin: 0;
   line-height: 1.6;
 }
 
 .emailLink {
-  color: #0066cc;
+  color: var(--color-link);
   text-decoration: none;
   transition: color 0.2s ease;
   
   &:hover {
-    color: #0052a3;
+    color: var(--color-link-hover);
     text-decoration: underline;
   }
 }

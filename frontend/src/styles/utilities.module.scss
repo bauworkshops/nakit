@@ -4,20 +4,20 @@
   text-align: center;
   padding: 60px 20px;
   font-size: 18px;
-  color: #999;
+  color: var(--color-text-light);
 }
 
 .error {
   text-align: center;
   padding: 60px 20px;
   font-size: 18px;
-  color: #e74c3c;
+  color: var(--color-error);
 }
 
 .emptyState {
   text-align: center;
   padding: 80px 20px;
-  color: #999;
+  color: var(--color-text-light);
 
   h2 {
     font-size: 24px;

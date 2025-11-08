@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <div className="container" style={{ textAlign: 'center', padding: '80px 20px' }}>
       <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>{NOT_FOUND_CODE}</h1>
-      <h2 style={{ fontSize: '24px', marginBottom: '20px', color: '#666' }}>
+      <h2 style={{ fontSize: '24px', marginBottom: '20px', color: 'var(--color-text)' }}>
         {PAGE_NOT_FOUND}
       </h2>
       <Link href="/" className="back-link">

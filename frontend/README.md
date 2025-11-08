@@ -243,10 +243,17 @@ export interface Shop {
 
 ```css
 :root {
-  --primary: #222;      /* Основной темный */
-  --accent: #d4af37;    /* Золотой акцент */
-  --bg: #fafafa;        /* Светлый фон */
-  --white: #ffffff;     /* Белый */
+  --color-primary: #c1a549;    /* Primary gold */
+  --color-accent: #c0a448;     /* Accent gold */
+  --color-bg: #fafafa;         /* Background */
+  --color-white: #ffffff;      /* White */
+  --color-text: #6d6c6c;       /* Primary text */
+  --color-text-light: #999999; /* Light text/secondary */
+  --color-text-dark: #222222;  /* Dark text/headings */
+  --color-error: #e74c3c;      /* Error state */
+  --color-link: #0066cc;       /* Links */
+  --color-link-hover: #0052a3; /* Link hover */
+  --color-border: #f5f5f5;     /* Borders/dividers */
 }
 ```
 

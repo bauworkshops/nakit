@@ -47,14 +47,14 @@
 }
 
 .menuLink {
-  color: #333;
+  color: var(--color-text-dark);
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
   transition: color 0.2s ease;
   
   &:hover {
-    color: #666;
+    color: var(--color-text);
   }
 }
 

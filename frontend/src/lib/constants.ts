@@ -1,4 +1,5 @@
 // Brand colors extracted from logo SVGs
-export const BRAND_COLOR = '#c1a549'; // Primary gold fill
-export const BRAND_COLOR_STROKE = '#c0a448'; // Gold stroke/outline
-export const BRAND_ACCENT = '#6d6c6c'; // Default accent color
+// NOTE: Use CSS variables from globals.scss (:root) in components/pages
+// These constants are kept for reference and non-CSS usage (e.g., canvas, SVG manipulation)
+export const BRAND_COLOR = '#c1a549'; // Primary gold fill (--color-primary)
+export const BRAND_COLOR_STROKE = '#c0a448'; // Gold stroke/outline (--color-accent)

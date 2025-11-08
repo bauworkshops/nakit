@@ -10,7 +10,7 @@ interface ProductImageGalleryProps {
 
 export function ProductImageGallery({ productId, productTitle, images }: ProductImageGalleryProps) {
   if (images.length === 0) {
-    return <div className={styles.mainImageWrapper} style={{ background: '#e0e0e0' }} />;
+    return <div className={styles.mainImageWrapper} style={{ background: 'var(--color-border)' }} />;
   }
 
   return (
