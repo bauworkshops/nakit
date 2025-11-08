@@ -2,6 +2,9 @@ import { Navbar } from '@/components/Navbar';
 import { pb, Registry } from '@/lib/pocketbase';
 import styles from './page.module.scss';
 
+// Revalidate every 30 minutes (1800 seconds)
+export const revalidate = 1800;
+
 // Text constants
 const PAGE_TITLE = 'Contacts';
 const SECTION_TITLE = 'Get in Touch';
@@ -13,8 +16,8 @@ const LABEL_HOURS = 'Working Hours';
 
 // Default fallback values
 const DEFAULT_ADDRESS = '123 Fashion Street, Downtown District, City 12345';
-const DEFAULT_PHONE = '+1 (555) 123-4567';
-const DEFAULT_EMAIL = 'info@baunakit.com';
+const DEFAULT_PHONE = '+381 (62) 822-6474';
+const DEFAULT_EMAIL = 'u.baukina@gmail.com';
 const DEFAULT_HOURS = 'Mon-Fri: 9:00 AM - 8:00 PM, Sat-Sun: 10:00 AM - 6:00 PM';
 
 // Default coordinates (New York City center as example)
