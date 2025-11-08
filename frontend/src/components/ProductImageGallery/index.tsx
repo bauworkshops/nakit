@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/pocketbase';
-import styles from './ProductImageGallery.module.scss';
+import styles from './index.module.scss';
 
 interface ProductImageGalleryProps {
   productId: string;

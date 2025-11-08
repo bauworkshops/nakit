@@ -1,8 +1,11 @@
 import { pb, Shop } from '@/lib/pocketbase';
-import { ShopCard } from '@/components/ShopCard/ShopCard';
+import { ShopCard } from '@/components/ShopCard';
 import { Navbar } from '@/components/Navbar';
 import styles from './page.module.scss';
 import utilStyles from '@/styles/utilities.module.scss';
+
+// Revalidate every 30 minutes (1800 seconds)
+export const revalidate = 1800;
 
 // Text constants
 const PAGE_TITLE = 'Shops';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Shop } from '@/lib/pocketbase';
-import styles from './ShopCard.module.scss';
+import styles from './index.module.scss';
 
 // Text constants
 const LABEL_ADDRESS = 'Address';

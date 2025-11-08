@@ -7,6 +7,10 @@ import { ProductInfo } from '@/components/ProductInfo';
 import { ProductMeta } from '@/components/ProductMeta';
 import styles from '../ProductDetail.module.scss';
 
+
+// Revalidate every 30 minutes (1800 seconds)
+export const revalidate = 1800;
+
 // Text constants
 const BACK_TO_CATALOG = '← To catalogue';
 const ERROR_LOADING_PRODUCT = 'Error loading product';

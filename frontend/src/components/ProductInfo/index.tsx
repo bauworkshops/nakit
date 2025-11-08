@@ -1,4 +1,4 @@
-import styles from './ProductInfo.module.scss';
+import styles from './index.module.scss';
 
 // Text constants
 const LOCALE = 'en-US';

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ProductCollection, getImageUrl } from '@/lib/pocketbase';
-import styles from './CollectionCard.module.scss';
+import styles from './index.module.scss';
 
 interface CollectionCardProps {
   collection: ProductCollection;

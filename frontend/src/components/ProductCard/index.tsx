@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product, getImageUrl } from '@/lib/pocketbase';
-import styles from './ProductCard.module.scss';
+import styles from './index.module.scss';
 
 // Text constants
 const LOCALE = 'en-US';

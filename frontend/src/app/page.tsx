@@ -4,6 +4,10 @@ import { Navbar } from '@/components/Navbar';
 import styles from './page.module.scss';
 import utilStyles from '@/styles/utilities.module.scss';
 
+
+// Revalidate every 30 minutes (1800 seconds)
+export const revalidate = 1800;
+
 // Text constants
 const ERROR_LOADING_PRODUCTS = 'Error loading products';
 const NO_PRODUCTS_FOUND = 'No products found';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Logo } from './Logo';
-import styles from './Navbar.module.scss';
+import { Logo } from '../Logo';
+import styles from './index.module.scss';
 
 // Text constants
 const MENU_CATALOGUE = 'Catalogue';

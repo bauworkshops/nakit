@@ -1,4 +1,4 @@
-import styles from './ProductMeta.module.scss';
+import styles from './index.module.scss';
 
 // Text constants
 const COLLECTION_LABEL = 'Collection:';
