@@ -1,0 +1,26 @@
+// ProductMeta component styles
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.metaItem {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.metaLabel {
+  font-weight: 600;
+  color: #555;
+}
+
+.metaValue {
+  color: #777;
+}
+

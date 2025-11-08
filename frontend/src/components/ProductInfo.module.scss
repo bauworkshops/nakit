@@ -1,0 +1,37 @@
+// ProductInfo component styles
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.2;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #c1a549;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .price {
+    font-size: 26px;
+  }
+}
+

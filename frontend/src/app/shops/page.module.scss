@@ -1,0 +1,34 @@
+// Shops page styles
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  color: #222;
+}
+
+.shopsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  
+  .shopsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+

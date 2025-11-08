@@ -37,6 +37,14 @@ export interface Shop {
   updated: string;
 }
 
+export interface Registry {
+  id: string;
+  key: string;
+  value: string;
+  created: string;
+  updated: string;
+}
+
 export interface Product {
   id: string;
   title: string;
