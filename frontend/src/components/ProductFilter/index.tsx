@@ -39,6 +39,7 @@ export interface FilterState {
 interface FilterOption {
   id: string;
   name: string;
+  disabled?: boolean;
 }
 
 interface ProductFilterProps {
@@ -114,7 +115,11 @@ export function ProductFilter({
             >
               <option value="">{ALL_OPTION}</option>
               {collections.map((collection) => (
-                <option key={collection.id} value={collection.id}>
+                <option 
+                  key={collection.id} 
+                  value={collection.id}
+                  disabled={collection.disabled}
+                >
                   {collection.name}
                 </option>
               ))}
@@ -131,7 +136,11 @@ export function ProductFilter({
             >
               <option value="">{ALL_OPTION}</option>
               {types.map((type) => (
-                <option key={type.id} value={type.id}>
+                <option 
+                  key={type.id} 
+                  value={type.id}
+                  disabled={type.disabled}
+                >
                   {type.name}
                 </option>
               ))}
@@ -148,7 +157,11 @@ export function ProductFilter({
             >
               <option value="">{ALL_OPTION}</option>
               {colors.map((color) => (
-                <option key={color.id} value={color.id}>
+                <option 
+                  key={color.id} 
+                  value={color.id}
+                  disabled={color.disabled}
+                >
                   {color.name}
                 </option>
               ))}

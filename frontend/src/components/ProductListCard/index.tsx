@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product, getImageUrl } from '@/lib/pocketbase';
+import { nameToSlug } from '@/lib/slugUtils';
 import styles from './index.module.scss';
 
 const LOCALE = 'en-US';
@@ -18,9 +19,11 @@ export function ProductListCard({ product }: ProductListCardProps) {
   const collection = product.expand?.collection_id;
   const type = product.expand?.type_id;
   const color = product.expand?.color_id;
+  
+  const productSlug = nameToSlug(product.title);
 
   return (
-    <Link href={`/product/${product.id}`} className={styles.card}>
+    <Link href={`/product/${productSlug}`} className={styles.card}>
       <div className={styles.imageWrapper}>
         <Image
           src={imageUrl}

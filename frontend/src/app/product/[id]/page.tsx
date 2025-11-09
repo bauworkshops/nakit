@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { ProductImageGallery } from '@/components/ProductImageGallery';
 import { ProductInfo } from '@/components/ProductInfo';
 import { ProductMeta } from '@/components/ProductMeta';
+import { nameToSlug } from '@/lib/slugUtils';
 import styles from '../ProductDetail.module.scss';
 
 
@@ -15,14 +16,15 @@ export const revalidate = 1800;
 const BACK_TO_CATALOG = '← To catalogue';
 const ERROR_LOADING_PRODUCT = 'Error loading product';
 
-// Get product by ID
-async function getProduct(id: string): Promise<Product | null> {
+// Get product by slug (searches by title)
+async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const product = await pb.collection('products').getOne<Product>(id, {
+    // Get all products and find matching slug
+    const products = await pb.collection('products').getFullList<Product>({
       expand: 'collection_id,shop_ids,type_id,color_id',
     });
-    
-    return product;
+    const product = products.find(p => nameToSlug(p.title) === slug.toLowerCase());
+    return product || null;
   } catch (error) {
     console.error(`${ERROR_LOADING_PRODUCT}:`, error);
     return null;
@@ -30,7 +32,8 @@ async function getProduct(id: string): Promise<Product | null> {
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id);
+  // params.id is actually a slug now, but keeping the param name for compatibility
+  const product = await getProductBySlug(params.id);
 
   if (!product) {
     notFound();

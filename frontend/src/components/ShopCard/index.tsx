@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Shop, getImageUrl } from '@/lib/pocketbase';
+import { nameToSlug } from '@/lib/slugUtils';
 import styles from './index.module.scss';
 
 // Text constants
@@ -19,8 +20,10 @@ export function ShopCard({ shop }: ShopCardProps) {
     ? getImageUrl('jkl012shops3456', shop.id, shop.preview_image)
     : null;
 
+  const shopSlug = nameToSlug(shop.name);
+
   return (
-    <Link href={`/shop/${shop.id}`} className={styles.card}>
+    <Link href={`/shop/${shopSlug}`} className={styles.card}>
       {imageUrl && (
         <div className={styles.imageWrapper}>
           <Image

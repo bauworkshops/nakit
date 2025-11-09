@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Product, getImageUrl } from '@/lib/pocketbase';
+import { nameToSlug } from '@/lib/slugUtils';
 import styles from './index.module.scss';
 
 // Text constants
@@ -15,8 +16,10 @@ export function ProductCard({ product }: ProductCardProps) {
     ? getImageUrl('products', product.id, product.preview_image, '400x400')
     : '/placeholder.svg';
 
+  const productSlug = nameToSlug(product.title);
+
   return (
-    <Link href={`/product/${product.id}`} className={styles.card}>
+    <Link href={`/product/${productSlug}`} className={styles.card}>
       <div className={`product-card ${styles.imageWrapper}`}>
         <Image
           src={imageUrl}

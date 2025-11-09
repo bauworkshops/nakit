@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { pb, Shop, getImageUrl } from '@/lib/pocketbase';
 import { Navbar } from '@/components/Navbar';
 import { GoogleMap } from '@/components/GoogleMap';
+import { nameToSlug } from '@/lib/slugUtils';
 import styles from './page.module.scss';
 
 // Revalidate every 30 minutes (1800 seconds)
@@ -23,11 +24,13 @@ const SHOP_IMAGE_ALT = 'Shop image';
 const DEFAULT_LAT = 40.7589;
 const DEFAULT_LNG = -73.9851;
 
-// Get shop by ID
-async function getShop(id: string): Promise<Shop | null> {
+// Get shop by slug (searches by name)
+async function getShopBySlug(slug: string): Promise<Shop | null> {
   try {
-    const shop = await pb.collection('shops').getOne<Shop>(id);
-    return shop;
+    // Get all shops and find matching slug
+    const shops = await pb.collection('shops').getFullList<Shop>();
+    const shop = shops.find(s => nameToSlug(s.name) === slug.toLowerCase());
+    return shop || null;
   } catch (error) {
     console.error(`${ERROR_LOADING_SHOP}:`, error);
     return null;
@@ -35,7 +38,8 @@ async function getShop(id: string): Promise<Shop | null> {
 }
 
 export default async function ShopDetailPage({ params }: { params: { id: string } }) {
-  const shop = await getShop(params.id);
+  // params.id is actually a slug now, but keeping the param name for compatibility
+  const shop = await getShopBySlug(params.id);
 
   if (!shop) {
     notFound();
@@ -62,19 +66,6 @@ export default async function ShopDetailPage({ params }: { params: { id: string 
         <div className={styles.content}>
           <div className={styles.info}>
             <h1 className={styles.shopName}>{shop.name}</h1>
-
-            {imageUrl && (
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={imageUrl}
-                  alt={SHOP_IMAGE_ALT}
-                  width={600}
-                  height={400}
-                  className={styles.image}
-                  priority
-                />
-              </div>
-            )}
 
             <div className={styles.detailsGrid}>
               {shop.address && (
@@ -110,6 +101,19 @@ export default async function ShopDetailPage({ params }: { params: { id: string 
                 <div className={styles.detailItem}>
                   <h3 className={styles.label}>{LABEL_HOURS}</h3>
                   <p className={styles.value}>{shop.working_hours}</p>
+                </div>
+              )}
+
+              {imageUrl && (
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={imageUrl}
+                    alt={SHOP_IMAGE_ALT}
+                    width={600}
+                    height={400}
+                    className={styles.image}
+                    priority
+                  />
                 </div>
               )}
             </div>

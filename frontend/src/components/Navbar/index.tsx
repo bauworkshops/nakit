@@ -19,7 +19,7 @@ interface NavbarProps {
   enhancedHover?: boolean;
 }
 
-export function Navbar({ enhancedHover = false }: NavbarProps) {
+export function Navbar({ enhancedHover = true }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Lock body scroll when sidebar is open
