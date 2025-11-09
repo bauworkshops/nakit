@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 // Text constants
 const MENU_CATALOGUE = 'Catalogue';
 const MENU_COLLECTIONS = 'Collections';
+const MENU_PACKAGING = 'Packaging';
 const MENU_SHOPS = 'Shops';
 const MENU_CONTACTS = 'Contacts';
 const ARIA_LABEL_MENU = 'Toggle menu';
@@ -71,6 +72,14 @@ export function Navbar({ enhancedHover = false }: NavbarProps) {
                 className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
               >
                 {MENU_COLLECTIONS}
+              </Link>
+            </li>
+            <li>
+              <Link 
+                href="/packaging" 
+                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+              >
+                {MENU_PACKAGING}
               </Link>
             </li>
             <li>
@@ -174,6 +183,11 @@ export function Navbar({ enhancedHover = false }: NavbarProps) {
             <li>
               <Link href="/collections" className={styles.sidebarLink} onClick={closeMenu}>
                 {MENU_COLLECTIONS}
+              </Link>
+            </li>
+            <li>
+              <Link href="/packaging" className={styles.sidebarLink} onClick={closeMenu}>
+                {MENU_PACKAGING}
               </Link>
             </li>
             <li>

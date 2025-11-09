@@ -72,6 +72,16 @@ export interface Product {
   };
 }
 
+export interface Packaging {
+  id: string;
+  title: string;
+  description?: string;
+  preview?: string;
+  images?: string[];
+  created: string;
+  updated: string;
+}
+
 // Утилита для получения URL изображения
 export function getImageUrl(
   collectionId: string,
