@@ -38,6 +38,7 @@
   }
 }
 
+// Desktop menu
 .menu {
   display: flex;
   gap: 32px;
@@ -46,6 +47,7 @@
   padding: 0;
 }
 
+// Base menu link styles
 .menuLink {
   color: var(--color-text-dark);
   text-decoration: none;
@@ -58,17 +60,285 @@
   }
 }
 
+// Enhanced hover effect variant
+.menuLinkEnhanced {
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    transform: scaleX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 3px 3px 0 0;
+  }
+  
+  &:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-light);
+    transform: translateY(-2px);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Hamburger button (hidden on desktop)
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--color-text-dark);
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: 101;
+
+  &:hover {
+    color: var(--color-primary);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.hamburgerIcon {
+  display: block;
+}
+
+// Hamburger animation - elegant jewelry-inspired transform
+.hamburgerLines {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line1,
+.line2,
+.line3 {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburgerOpen {
+  .line1 {
+    transform: translateY(6px) rotate(45deg);
+  }
+  
+  .line2 {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  
+  .line3 {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+}
+
+// Overlay backdrop
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 110;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Mobile sidebar
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 120;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+.sidebarOpen {
+  right: 0;
+}
+
+.sidebarContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-height: 100%;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--color-border);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), transparent);
+  }
+}
+
+.sidebarLogo {
+  height: 36px;
+  width: auto;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--color-text-dark);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    color: var(--color-primary);
+    background: var(--color-bg-light);
+    transform: rotate(90deg);
+  }
+
+  &:active {
+    transform: rotate(90deg) scale(0.9);
+  }
+}
+
+.sidebarMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+
+  li {
+    animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+    
+    @for $i from 1 through 4 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{0.1 + ($i * 0.05)}s;
+      }
+    }
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sidebarLink {
+  display: block;
+  color: var(--color-text-dark);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 16px 20px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--color-primary);
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover {
+    background: var(--color-bg-light);
+    color: var(--color-primary);
+    padding-left: 28px;
+
+    &::before {
+      transform: scaleY(1);
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Responsive breakpoint
 @media (max-width: 768px) {
   .logoSvg {
     height: 40px;
   }
   
+  // Hide desktop menu, show hamburger
   .menu {
-    gap: 16px;
+    display: none;
   }
-  
-  .menuLink {
-    font-size: 14px;
+
+  .hamburger {
+    display: block;
+  }
+}
+
+// Extra small devices
+@media (max-width: 480px) {
+  .navbar {
+    padding: 16px;
+  }
+
+  .sidebar {
+    width: 100%;
+    right: -100%;
+  }
+
+  .sidebarOpen {
+    right: 0;
   }
 }
 
