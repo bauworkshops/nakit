@@ -17,20 +17,36 @@ export default function PackagingPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchPackaging = async () => {
       try {
         const records = await pb.collection('packaging').getFullList<Packaging>({
           sort: '-created',
+          requestKey: 'packaging-list',
+          signal: abortController.signal,
         });
+        
+        if (isCancelled) return;
+        
         setItems(records);
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading packaging:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchPackaging();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {

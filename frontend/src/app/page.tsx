@@ -24,21 +24,37 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchProducts = async () => {
       try {
         const records = await pb.collection('products').getFullList<Product>({
           expand: 'collection_id,type_id,color_id',
           sort: '-mainpage_order,-created',
+          requestKey: 'home-products',
+          signal: abortController.signal,
         });
+        
+        if (isCancelled) return;
+        
         setProducts(records);
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading products:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchProducts();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {

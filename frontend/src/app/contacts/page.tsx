@@ -27,15 +27,21 @@ export default function ContactsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchContactInfo = async () => {
       try {
         const getRegistryValue = async (key: string, defaultValue: string): Promise<string> => {
           try {
             const records = await pb.collection('registry').getFullList<Registry>({
               filter: `key = "${key}"`,
+              requestKey: `registry-${key}`,
+              signal: abortController.signal,
             });
             return records.length > 0 ? records[0].value : defaultValue;
-          } catch (error) {
+          } catch (error: any) {
+            if (error?.isAbort) return defaultValue;
             return defaultValue;
           }
         };
@@ -48,6 +54,8 @@ export default function ContactsPage() {
           getRegistryValue('contact_coords', `${DEFAULT_LAT},${DEFAULT_LNG}`),
         ]);
 
+        if (isCancelled) return;
+
         const [latStr, lngStr] = coordsVal.split(',');
         
         setAddress(addressVal);
@@ -55,14 +63,22 @@ export default function ContactsPage() {
         setEmail(emailVal);
         setHours(hoursVal);
         setCoords({ lat: parseFloat(latStr), lng: parseFloat(lngStr) });
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading contact info:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchContactInfo();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {

@@ -16,20 +16,36 @@ export default function CollectionsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchCollections = async () => {
       try {
         const records = await pb.collection('product_collections').getFullList<ProductCollection>({
           sort: '-created',
+          requestKey: 'collections-list',
+          signal: abortController.signal,
         });
+        
+        if (isCancelled) return;
+        
         setCollections(records);
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading collections:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchCollections();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {

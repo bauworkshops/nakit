@@ -56,29 +56,53 @@ export default function CataloguePage() {
 
   // Fetch data on mount
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchData = async () => {
       try {
         const [productsData, collectionsData, typesData, colorsData] = await Promise.all([
           pb.collection('products').getFullList<Product>({
             expand: 'collection_id,type_id,color_id',
+            requestKey: 'catalogue-products',
+            signal: abortController.signal,
           }),
-          pb.collection('product_collections').getFullList<FilterOption>(),
-          pb.collection('product_types').getFullList<FilterOption>(),
-          pb.collection('product_colors').getFullList<FilterOption>(),
+          pb.collection('product_collections').getFullList<FilterOption>({
+            requestKey: 'catalogue-collections',
+            signal: abortController.signal,
+          }),
+          pb.collection('product_types').getFullList<FilterOption>({
+            requestKey: 'catalogue-types',
+            signal: abortController.signal,
+          }),
+          pb.collection('product_colors').getFullList<FilterOption>({
+            requestKey: 'catalogue-colors',
+            signal: abortController.signal,
+          }),
         ]);
+
+        if (isCancelled) return;
 
         setProducts(productsData);
         setAllCollections(collectionsData);
         setAllTypes(typesData);
         setAllColors(colorsData);
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error fetching data:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   // Apply filters and sort, calculate available options

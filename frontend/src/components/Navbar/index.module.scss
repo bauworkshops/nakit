@@ -314,7 +314,6 @@
 // Language switcher
 .languageSwitcherDesktop {
   display: flex;
-  margin-left: 24px;
 }
 
 .languageSwitcherMobile {
@@ -334,8 +333,14 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .menu {
+    gap: 16px;
+  }
+}
+
 // Responsive breakpoint
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .logoSvg {
     height: 40px;
   }

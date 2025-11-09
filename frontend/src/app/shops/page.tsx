@@ -16,20 +16,36 @@ export default function ShopsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchShops = async () => {
       try {
         const records = await pb.collection('shops').getFullList<Shop>({
           sort: '-created',
+          requestKey: 'shops-list',
+          signal: abortController.signal,
         });
+        
+        if (isCancelled) return;
+        
         setShops(records);
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading shops:', error);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchShops();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {
