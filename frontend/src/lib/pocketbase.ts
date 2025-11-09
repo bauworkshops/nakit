@@ -7,6 +7,9 @@ export const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL || 'http
 export interface ProductColor {
   id: string;
   name: string;
+  name_rus?: string;
+  name_srb?: string;
+  color?: string; // CSS color value (hex, rgb, etc.)
   created: string;
   updated: string;
 }
@@ -14,6 +17,8 @@ export interface ProductColor {
 export interface ProductCollection {
   id: string;
   name: string;
+  name_rus?: string;
+  name_srb?: string;
   preview_image?: string;
   created: string;
   updated: string;
@@ -22,6 +27,8 @@ export interface ProductCollection {
 export interface ProductType {
   id: string;
   name: string;
+  name_rus?: string;
+  name_srb?: string;
   created: string;
   updated: string;
 }
@@ -29,6 +36,8 @@ export interface ProductType {
 export interface Shop {
   id: string;
   name: string;
+  name_rus?: string;
+  name_srb?: string;
   hidden?: boolean;
   address?: string;
   phone?: string;
@@ -51,7 +60,11 @@ export interface Registry {
 export interface Product {
   id: string;
   title: string;
+  title_rus?: string;
+  title_srb?: string;
   description?: string;
+  description_rus?: string;
+  description_srb?: string;
   mainpage_order?: number;
   price: number;
   hidden?: boolean;
@@ -76,7 +89,11 @@ export interface Product {
 export interface Packaging {
   id: string;
   title: string;
+  title_rus?: string;
+  title_srb?: string;
   description?: string;
+  description_rus?: string;
+  description_srb?: string;
   preview?: string;
   images?: string[];
   created: string;
