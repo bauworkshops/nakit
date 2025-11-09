@@ -1,9 +1,12 @@
 'use client';
 
-// Text constants
-const LOADING_TEXT = 'Loading...';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 
 export default function Loading() {
+  const { language } = useLanguage();
+
   return (
     <div className="loading">
       <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -16,7 +19,7 @@ export default function Loading() {
           animation: 'spin 1s linear infinite',
           margin: '0 auto 20px'
         }} />
-        <p style={{ color: 'var(--color-text-light)', fontSize: '18px' }}>{LOADING_TEXT}</p>
+        <p style={{ color: 'var(--color-text-light)', fontSize: '18px' }}>{t(translations.common.loading, language)}</p>
       </div>
       <style jsx>{`
         @keyframes spin {

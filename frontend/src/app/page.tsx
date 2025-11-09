@@ -1,30 +1,14 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { pb, Product } from '@/lib/pocketbase';
 import { ProductCard } from '@/components/ProductCard';
 import { Navbar } from '@/components/Navbar';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import styles from './page.module.scss';
 import utilStyles from '@/styles/utilities.module.scss';
-
-
-// Revalidate every 30 minutes (1800 seconds)
-export const revalidate = 1800;
-
-// Text constants
-const ERROR_LOADING_PRODUCTS = 'Error loading products';
-const NO_PRODUCTS_FOUND = 'No products found';
-const ADD_PRODUCTS_MESSAGE = 'Add products through Pocketbase admin panel';
-
-// Get products on server side
-async function getProducts(): Promise<Product[]> {
-  try {
-    const records = await pb.collection('products').getFullList<Product>({
-      expand: 'collection_id,type_id,color_id',
-      sort: '-mainpage_order,-created',
-    });
-    return records;
-  } catch (error) {
-    return [];
-  }
-}
 
 // Determine grid layout based on item count
 function getGridLayout(count: number): string {
@@ -34,8 +18,42 @@ function getGridLayout(count: number): string {
   return 'mosaic';
 }
 
-export default async function Home() {
-  const products = await getProducts();
+export default function Home() {
+  const { language } = useLanguage();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const records = await pb.collection('products').getFullList<Product>({
+          expand: 'collection_id,type_id,color_id',
+          sort: '-mainpage_order,-created',
+        });
+        setProducts(records);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <Navbar />
+        <main>
+          <div className={utilStyles.emptyState}>
+            <p>{t(translations.common.loading, language)}</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   const layoutType = getGridLayout(products.length);
 
   return (
@@ -45,8 +63,8 @@ export default async function Home() {
       <main>
         {products.length === 0 ? (
           <div className={utilStyles.emptyState}>
-            <h2>{NO_PRODUCTS_FOUND}</h2>
-            <p>{ADD_PRODUCTS_MESSAGE}</p>
+            <h2>{t(translations.home.noProducts, language)}</h2>
+            <p>{t(translations.home.addProducts, language)}</p>
           </div>
         ) : (
           <div 
@@ -62,7 +80,4 @@ export default async function Home() {
     </div>
   );
 }
-
-// Disable caching for dynamic content
-export const dynamic = 'force-dynamic';
 

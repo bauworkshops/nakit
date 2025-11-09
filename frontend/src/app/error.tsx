@@ -1,9 +1,8 @@
 'use client';
 
-// Text constants
-const ERROR_TITLE = 'Error';
-const ERROR_DEFAULT_MESSAGE = 'Something went wrong';
-const TRY_AGAIN_BUTTON = 'Try again';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 
 export default function Error({
   error,
@@ -12,13 +11,15 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { language } = useLanguage();
+
   return (
     <div className="container" style={{ textAlign: 'center', padding: '80px 20px' }}>
       <h1 style={{ fontSize: '48px', marginBottom: '20px', color: 'var(--color-error)' }}>
-        {ERROR_TITLE}
+        {t(translations.common.error, language)}
       </h1>
       <p style={{ fontSize: '18px', marginBottom: '30px', color: 'var(--color-text)' }}>
-        {error.message || ERROR_DEFAULT_MESSAGE}
+        {error.message || t(translations.common.errorDefault, language)}
       </p>
       <button
         onClick={reset}
@@ -33,7 +34,7 @@ export default function Error({
           cursor: 'pointer',
         }}
       >
-        {TRY_AGAIN_BUTTON}
+        {t(translations.common.tryAgain, language)}
       </button>
     </div>
   );

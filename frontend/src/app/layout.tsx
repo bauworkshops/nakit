@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import './globals.scss';
 
 // Text constants
@@ -18,7 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={SITE_LANG}>
-      <body>{children}</body>
+      <body>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

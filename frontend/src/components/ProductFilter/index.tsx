@@ -1,30 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t, getLocalizedField } from '@/lib/i18nUtils';
 import styles from './index.module.scss';
-
-const FILTER_TITLE = 'Filter Products';
-const COLLECTION_LABEL = 'Collection';
-const TYPE_LABEL = 'Type';
-const COLOR_LABEL = 'Color';
-const PRICE_LABEL = 'Price Range';
-const TRANSFORMORABLE_LABEL = 'Transformable';
-const ALL_OPTION = 'All';
-const YES_OPTION = 'Yes';
-const NO_OPTION = 'No';
-const MIN_PRICE_PLACEHOLDER = 'Min';
-const MAX_PRICE_PLACEHOLDER = 'Max';
-const RESET_FILTERS = 'Reset Filters';
-const SORT_LABEL = 'Sort By';
-
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'oldest', label: 'Oldest First' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'title-asc', label: 'Name: A-Z' },
-  { value: 'title-desc', label: 'Name: Z-A' },
-];
 
 export interface FilterState {
   collectionId: string;
@@ -57,7 +37,17 @@ export function ProductFilter({
   types,
   colors,
 }: ProductFilterProps) {
+  const { language } = useLanguage();
   const [isSticky, setIsSticky] = useState(false);
+
+  const SORT_OPTIONS = [
+    { value: 'newest', label: t(translations.filter.sortNewest, language) },
+    { value: 'oldest', label: t(translations.filter.sortOldest, language) },
+    { value: 'price-asc', label: t(translations.filter.sortPriceAsc, language) },
+    { value: 'price-desc', label: t(translations.filter.sortPriceDesc, language) },
+    { value: 'title-asc', label: t(translations.filter.sortTitleAsc, language) },
+    { value: 'title-desc', label: t(translations.filter.sortTitleDesc, language) },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -96,10 +86,10 @@ export function ProductFilter({
     <div className={`${styles.filterContainer} ${isSticky ? styles.sticky : ''}`}>
       <div className={styles.filterWrapper}>
         <div className={styles.header}>
-          <h2 className={styles.title}>{FILTER_TITLE}</h2>
+          <h2 className={styles.title}>{t(translations.filter.title, language)}</h2>
           {hasActiveFilters && (
             <button onClick={handleReset} className={styles.resetButton}>
-              {RESET_FILTERS}
+              {t(translations.filter.resetFilters, language)}
             </button>
           )}
         </div>
@@ -107,20 +97,20 @@ export function ProductFilter({
         <div className={styles.filtersGrid}>
           {/* Collection Filter */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{COLLECTION_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.collection, language)}</label>
             <select
               value={filters.collectionId}
               onChange={(e) => handleChange('collectionId', e.target.value)}
               className={styles.select}
             >
-              <option value="">{ALL_OPTION}</option>
+              <option value="">{t(translations.filter.all, language)}</option>
               {collections.map((collection) => (
                 <option 
                   key={collection.id} 
                   value={collection.id}
                   disabled={collection.disabled}
                 >
-                  {collection.name}
+                  {getLocalizedField(collection, 'name', language)}
                 </option>
               ))}
             </select>
@@ -128,20 +118,20 @@ export function ProductFilter({
 
           {/* Type Filter */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{TYPE_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.type, language)}</label>
             <select
               value={filters.typeId}
               onChange={(e) => handleChange('typeId', e.target.value)}
               className={styles.select}
             >
-              <option value="">{ALL_OPTION}</option>
+              <option value="">{t(translations.filter.all, language)}</option>
               {types.map((type) => (
                 <option 
                   key={type.id} 
                   value={type.id}
                   disabled={type.disabled}
                 >
-                  {type.name}
+                  {getLocalizedField(type, 'name', language)}
                 </option>
               ))}
             </select>
@@ -149,20 +139,20 @@ export function ProductFilter({
 
           {/* Color Filter */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{COLOR_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.color, language)}</label>
             <select
               value={filters.colorId}
               onChange={(e) => handleChange('colorId', e.target.value)}
               className={styles.select}
             >
-              <option value="">{ALL_OPTION}</option>
+              <option value="">{t(translations.filter.all, language)}</option>
               {colors.map((color) => (
                 <option 
                   key={color.id} 
                   value={color.id}
                   disabled={color.disabled}
                 >
-                  {color.name}
+                  {getLocalizedField(color, 'name', language)}
                 </option>
               ))}
             </select>
@@ -170,11 +160,11 @@ export function ProductFilter({
 
           {/* Price Range */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{PRICE_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.priceRange, language)}</label>
             <div className={styles.priceRange}>
               <input
                 type="number"
-                placeholder={MIN_PRICE_PLACEHOLDER}
+                placeholder={t(translations.filter.minPrice, language)}
                 value={filters.minPrice}
                 onChange={(e) => handleChange('minPrice', e.target.value)}
                 className={styles.priceInput}
@@ -183,7 +173,7 @@ export function ProductFilter({
               <span className={styles.priceSeparator}>—</span>
               <input
                 type="number"
-                placeholder={MAX_PRICE_PLACEHOLDER}
+                placeholder={t(translations.filter.maxPrice, language)}
                 value={filters.maxPrice}
                 onChange={(e) => handleChange('maxPrice', e.target.value)}
                 className={styles.priceInput}
@@ -194,21 +184,21 @@ export function ProductFilter({
 
           {/* Transformorable */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{TRANSFORMORABLE_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.transformable, language)}</label>
             <select
               value={filters.isTransformorable}
               onChange={(e) => handleChange('isTransformorable', e.target.value)}
               className={styles.select}
             >
-              <option value="">{ALL_OPTION}</option>
-              <option value="true">{YES_OPTION}</option>
-              <option value="false">{NO_OPTION}</option>
+              <option value="">{t(translations.filter.all, language)}</option>
+              <option value="true">{t(translations.filter.yes, language)}</option>
+              <option value="false">{t(translations.filter.no, language)}</option>
             </select>
           </div>
 
           {/* Sort */}
           <div className={styles.filterGroup}>
-            <label className={styles.label}>{SORT_LABEL}</label>
+            <label className={styles.label}>{t(translations.filter.sortBy, language)}</label>
             <select
               value={filters.sortBy}
               onChange={(e) => handleChange('sortBy', e.target.value)}

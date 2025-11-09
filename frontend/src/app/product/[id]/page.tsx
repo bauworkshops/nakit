@@ -1,45 +1,74 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { pb, Product } from '@/lib/pocketbase';
 import { Navbar } from '@/components/Navbar';
 import { ProductImageGallery } from '@/components/ProductImageGallery';
 import { ProductInfo } from '@/components/ProductInfo';
 import { ProductMeta } from '@/components/ProductMeta';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import { nameToSlug } from '@/lib/slugUtils';
 import styles from '../ProductDetail.module.scss';
 
+export default function ProductPage() {
+  const params = useParams();
+  const { language } = useLanguage();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-// Revalidate every 30 minutes (1800 seconds)
-export const revalidate = 1800;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const slug = params.id as string;
+        const products = await pb.collection('products').getFullList<Product>({
+          expand: 'collection_id,shop_ids,type_id,color_id',
+        });
+        const foundProduct = products.find(p => nameToSlug(p.title) === slug.toLowerCase());
+        
+        if (foundProduct) {
+          setProduct(foundProduct);
+        } else {
+          setNotFound(true);
+        }
+      } catch (error) {
+        console.error('Error loading product:', error);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-// Text constants
-const BACK_TO_CATALOG = '← To catalogue';
-const ERROR_LOADING_PRODUCT = 'Error loading product';
+    fetchProduct();
+  }, [params.id]);
 
-// Get product by slug (searches by title)
-async function getProductBySlug(slug: string): Promise<Product | null> {
-  try {
-    // Get all products and find matching slug
-    const products = await pb.collection('products').getFullList<Product>({
-      expand: 'collection_id,shop_ids,type_id,color_id',
-    });
-    const product = products.find(p => nameToSlug(p.title) === slug.toLowerCase());
-    return product || null;
-  } catch (error) {
-    console.error(`${ERROR_LOADING_PRODUCT}:`, error);
-    return null;
+  if (loading) {
+    return (
+      <div>
+        <Navbar />
+        <main className={styles.detail}>
+          <p>{t(translations.common.loading, language)}</p>
+        </main>
+      </div>
+    );
   }
-}
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  // params.id is actually a slug now, but keeping the param name for compatibility
-  const product = await getProductBySlug(params.id);
-
-  if (!product) {
-    notFound();
+  if (notFound || !product) {
+    return (
+      <div>
+        <Navbar />
+        <main className={styles.detail}>
+          <h1>{t(translations.common.notFound, language)}</h1>
+          <Link href="/catalogue">{t(translations.product.backToCatalogue, language)}</Link>
+        </main>
+      </div>
+    );
   }
 
-  // Получаем все изображения (preview + images)
   const allImages = [
     product.preview_image,
     ...(Array.isArray(product.images) ? product.images : [])
@@ -51,7 +80,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
       <main className={styles.detail}>
         <Link href="/catalogue" className={styles.backLink}>
-          {BACK_TO_CATALOG}
+          {t(translations.product.backToCatalogue, language)}
         </Link>
 
         <div className={styles.grid}>
@@ -66,6 +95,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
               title={product.title}
               price={product.price}
               description={product.description}
+              product={product}
             />
 
             <ProductMeta
@@ -81,7 +111,4 @@ export default async function ProductPage({ params }: { params: { id: string } }
     </div>
   );
 }
-
-// Disable caching for dynamic content
-export const dynamic = 'force-dynamic';
 
