@@ -6,6 +6,9 @@ import { pb, Product } from '@/lib/pocketbase';
 import { ProductListCard } from '@/components/ProductListCard';
 import { ProductFilter, FilterState } from '@/components/ProductFilter';
 import { Navbar } from '@/components/Navbar';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import { 
   filtersToSearchParams, 
   searchParamsToFilters, 
@@ -15,12 +18,6 @@ import {
 import styles from './page.module.scss';
 import utilStyles from '@/styles/utilities.module.scss';
 
-const PAGE_TITLE = 'Catalogue';
-const NO_PRODUCTS_FOUND = 'No products found';
-const ADD_PRODUCTS_MESSAGE = 'Add products through Pocketbase admin panel';
-const LOADING_MESSAGE = 'Loading products...';
-const RESULTS_COUNT = 'products found';
-
 interface FilterOption extends BaseFilterOption {
   disabled?: boolean;
 }
@@ -28,6 +25,7 @@ interface FilterOption extends BaseFilterOption {
 export default function CataloguePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { language } = useLanguage();
   
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -196,7 +194,7 @@ export default function CataloguePage() {
         <Navbar />
         <main className={styles.main}>
           <div className={utilStyles.emptyState}>
-            <p>{LOADING_MESSAGE}</p>
+            <p>{t(translations.catalogue.loadingProducts, language)}</p>
           </div>
         </main>
       </div>
@@ -208,12 +206,11 @@ export default function CataloguePage() {
       <Navbar />
 
       <main className={styles.main}>
-        <h1 className={styles.pageTitle}>{PAGE_TITLE}</h1>
+        <h1 className={styles.pageTitle}>{t(translations.catalogue.title, language)}</h1>
         
         {products.length === 0 ? (
           <div className={utilStyles.emptyState}>
-            <h2>{NO_PRODUCTS_FOUND}</h2>
-            <p>{ADD_PRODUCTS_MESSAGE}</p>
+            <h2>{t(translations.catalogue.noProducts, language)}</h2>
           </div>
         ) : (
           <>
@@ -235,12 +232,12 @@ export default function CataloguePage() {
             />
 
             <div className={styles.resultsCount}>
-              {filteredProducts.length} {RESULTS_COUNT}
+              {filteredProducts.length} {t(translations.catalogue.resultsCount, language)}
             </div>
 
             {filteredProducts.length === 0 ? (
               <div className={utilStyles.emptyState}>
-                <h2>{NO_PRODUCTS_FOUND}</h2>
+                <h2>{t(translations.catalogue.noProducts, language)}</h2>
               </div>
             ) : (
               <div className={styles.productsList}>

@@ -5,21 +5,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Logo } from '../Logo';
+import { LanguageSwitcher } from '../LanguageSwitcher';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import styles from './index.module.scss';
-
-// Text constants
-const MENU_CATALOGUE = 'Catalogue';
-const MENU_COLLECTIONS = 'Collections';
-const MENU_PACKAGING = 'Packaging';
-const MENU_SHOPS = 'Shops';
-const MENU_CONTACTS = 'Contacts';
-const ARIA_LABEL_MENU = 'Toggle menu';
-const ARIA_LABEL_CLOSE = 'Close menu';
 
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { language } = useLanguage();
 
   // Lock body scroll when sidebar is open
   useEffect(() => {
@@ -62,7 +58,7 @@ export function Navbar() {
                 href="/catalogue" 
                 className={clsx(styles.menuLink, {[styles.active]: pathname === '/catalogue'})}
               >
-                {MENU_CATALOGUE}
+                {t(translations.nav.catalogue, language)}
               </Link>
             </li>
             <li>
@@ -70,7 +66,7 @@ export function Navbar() {
                 href="/collections" 
                 className={clsx(styles.menuLink, {[styles.active]: pathname === '/collections'})}
               >
-                {MENU_COLLECTIONS}
+                {t(translations.nav.collections, language)}
               </Link>
             </li>
             <li>
@@ -78,7 +74,7 @@ export function Navbar() {
                 href="/packaging" 
                 className={clsx(styles.menuLink, {[styles.active]: pathname === '/packaging'})}
               >
-                {MENU_PACKAGING}
+                {t(translations.nav.packaging, language)}
               </Link>
             </li>
             <li>
@@ -86,7 +82,7 @@ export function Navbar() {
                 href="/shops" 
                 className={clsx(styles.menuLink, {[styles.active]: pathname === '/shops'})}
               >
-                {MENU_SHOPS}
+                {t(translations.nav.shops, language)}
               </Link>
             </li>
             <li>
@@ -94,16 +90,21 @@ export function Navbar() {
                 href="/contacts" 
                 className={clsx(styles.menuLink, {[styles.active]: pathname === '/contacts'})}
               >
-                {MENU_CONTACTS}
+                {t(translations.nav.contacts, language)}
               </Link>
             </li>
           </ul>
+
+          {/* Language switcher for desktop */}
+          <div className={styles.languageSwitcherDesktop}>
+            <LanguageSwitcher />
+          </div>
 
           {/* Hamburger button for mobile */}
           <button 
             className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ''}`}
             onClick={toggleMenu}
-            aria-label={isOpen ? ARIA_LABEL_CLOSE : ARIA_LABEL_MENU}
+            aria-label={isOpen ? t(translations.nav.closeMenu, language) : t(translations.nav.toggleMenu, language)}
             aria-expanded={isOpen}
           >
             <svg 
@@ -160,7 +161,7 @@ export function Navbar() {
             <button 
               className={styles.closeButton}
               onClick={closeMenu}
-              aria-label={ARIA_LABEL_CLOSE}
+              aria-label={t(translations.nav.closeMenu, language)}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path 
@@ -180,7 +181,7 @@ export function Navbar() {
                 className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/catalogue'})} 
                 onClick={closeMenu}
               >
-                {MENU_CATALOGUE}
+                {t(translations.nav.catalogue, language)}
               </Link>
             </li>
             <li>
@@ -189,7 +190,7 @@ export function Navbar() {
                 className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/collections'})} 
                 onClick={closeMenu}
               >
-                {MENU_COLLECTIONS}
+                {t(translations.nav.collections, language)}
               </Link>
             </li>
             <li>
@@ -198,7 +199,7 @@ export function Navbar() {
                 className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/packaging'})} 
                 onClick={closeMenu}
               >
-                {MENU_PACKAGING}
+                {t(translations.nav.packaging, language)}
               </Link>
             </li>
             <li>
@@ -207,7 +208,7 @@ export function Navbar() {
                 className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/shops'})} 
                 onClick={closeMenu}
               >
-                {MENU_SHOPS}
+                {t(translations.nav.shops, language)}
               </Link>
             </li>
             <li>
@@ -216,10 +217,15 @@ export function Navbar() {
                 className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/contacts'})} 
                 onClick={closeMenu}
               >
-                {MENU_CONTACTS}
+                {t(translations.nav.contacts, language)}
               </Link>
             </li>
           </ul>
+
+          {/* Language switcher for mobile sidebar */}
+          <div className={styles.languageSwitcherMobile}>
+            <LanguageSwitcher />
+          </div>
         </div>
       </aside>
     </>

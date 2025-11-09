@@ -1,74 +1,105 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { GoogleMap } from '@/components/GoogleMap';
 import { pb, Registry } from '@/lib/pocketbase';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import styles from './page.module.scss';
-
-// Revalidate every 30 minutes (1800 seconds)
-export const revalidate = 1800;
-
-// Text constants
-const PAGE_TITLE = 'Contacts';
-const SECTION_TITLE = 'Get in Touch';
-const SECTION_SUBTITLE = 'We\'d love to hear from you. Here\'s how you can reach us.';
-const LABEL_ADDRESS = 'Address';
-const LABEL_PHONE = 'Phone';
-const LABEL_EMAIL = 'Email';
-const LABEL_HOURS = 'Working Hours';
 
 // Default fallback values
 const DEFAULT_ADDRESS = '123 Fashion Street, Downtown District, City 12345';
 const DEFAULT_PHONE = '+381 (62) 822-6474';
 const DEFAULT_EMAIL = 'u.baukina@gmail.com';
 const DEFAULT_HOURS = 'Mon-Fri: 9:00 AM - 8:00 PM, Sat-Sun: 10:00 AM - 6:00 PM';
-
-// Default coordinates (New York City center as example)
 const DEFAULT_LAT = 40.7589;
 const DEFAULT_LNG = -73.9851;
 
-// Fetch registry value by key
-async function getRegistryValue(key: string, defaultValue: string): Promise<string> {
-  try {
-    const records = await pb.collection('registry').getFullList<Registry>({
-      filter: `key = "${key}"`,
-    });
-    return records.length > 0 ? records[0].value : defaultValue;
-  } catch (error) {
-    return defaultValue;
-  }
-}
+export default function ContactsPage() {
+  const { language } = useLanguage();
+  const [address, setAddress] = useState(DEFAULT_ADDRESS);
+  const [phone, setPhone] = useState(DEFAULT_PHONE);
+  const [email, setEmail] = useState(DEFAULT_EMAIL);
+  const [hours, setHours] = useState(DEFAULT_HOURS);
+  const [coords, setCoords] = useState({ lat: DEFAULT_LAT, lng: DEFAULT_LNG });
+  const [loading, setLoading] = useState(true);
 
-export default async function ContactsPage() {
-  const address = await getRegistryValue('contact_address', DEFAULT_ADDRESS);
-  const phone = await getRegistryValue('contact_phone', DEFAULT_PHONE);
-  const email = await getRegistryValue('contact_email', DEFAULT_EMAIL);
-  const hours = await getRegistryValue('contact_hours', DEFAULT_HOURS);
-  const contact_coords = await getRegistryValue('contact_coords', `${DEFAULT_LAT},${DEFAULT_LNG}`);
-  const [lat, lng] = contact_coords.split(',');
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const getRegistryValue = async (key: string, defaultValue: string): Promise<string> => {
+          try {
+            const records = await pb.collection('registry').getFullList<Registry>({
+              filter: `key = "${key}"`,
+            });
+            return records.length > 0 ? records[0].value : defaultValue;
+          } catch (error) {
+            return defaultValue;
+          }
+        };
+
+        const [addressVal, phoneVal, emailVal, hoursVal, coordsVal] = await Promise.all([
+          getRegistryValue('contact_address', DEFAULT_ADDRESS),
+          getRegistryValue('contact_phone', DEFAULT_PHONE),
+          getRegistryValue('contact_email', DEFAULT_EMAIL),
+          getRegistryValue('contact_hours', DEFAULT_HOURS),
+          getRegistryValue('contact_coords', `${DEFAULT_LAT},${DEFAULT_LNG}`),
+        ]);
+
+        const [latStr, lngStr] = coordsVal.split(',');
+        
+        setAddress(addressVal);
+        setPhone(phoneVal);
+        setEmail(emailVal);
+        setHours(hoursVal);
+        setCoords({ lat: parseFloat(latStr), lng: parseFloat(lngStr) });
+      } catch (error) {
+        console.error('Error loading contact info:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <Navbar />
+        <main className={styles.main}>
+          <p>{t(translations.common.loading, language)}</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div>
       <Navbar />
 
       <main className={styles.main}>
-        <h1 className={styles.pageTitle}>{PAGE_TITLE}</h1>
+        <h1 className={styles.pageTitle}>{t(translations.contacts.title, language)}</h1>
         
         <div className={styles.content}>
           <div className={styles.info}>
-            <h2 className={styles.sectionTitle}>{SECTION_TITLE}</h2>
-            <p className={styles.subtitle}>{SECTION_SUBTITLE}</p>
+            <h2 className={styles.sectionTitle}>{t(translations.contacts.sectionTitle, language)}</h2>
+            <p className={styles.subtitle}>{t(translations.contacts.subtitle, language)}</p>
             
             <div className={styles.contactItem}>
-              <h3 className={styles.label}>{LABEL_ADDRESS}</h3>
+              <h3 className={styles.label}>{t(translations.contacts.address, language)}</h3>
               <p className={styles.value}>{address}</p>
             </div>
             
             <div className={styles.contactItem}>
-              <h3 className={styles.label}>{LABEL_PHONE}</h3>
+              <h3 className={styles.label}>{t(translations.contacts.phone, language)}</h3>
               <p className={styles.value}>{phone}</p>
             </div>
             
             <div className={styles.contactItem}>
-              <h3 className={styles.label}>{LABEL_EMAIL}</h3>
+              <h3 className={styles.label}>{t(translations.contacts.email, language)}</h3>
               <p className={styles.value}>
                 <a href={`mailto:${email}`} className={styles.emailLink}>
                   {email}
@@ -77,15 +108,15 @@ export default async function ContactsPage() {
             </div>
             
             <div className={styles.contactItem}>
-              <h3 className={styles.label}>{LABEL_HOURS}</h3>
+              <h3 className={styles.label}>{t(translations.contacts.hours, language)}</h3>
               <p className={styles.value}>{hours}</p>
             </div>
           </div>
           
           <div className={styles.mapWrapper}>
             <GoogleMap
-              lat={parseFloat(lat)}
-              lng={parseFloat(lng)}
+              lat={coords.lat}
+              lng={coords.lng}
               title="Location map"
               className={styles.map}
             />

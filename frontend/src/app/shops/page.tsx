@@ -1,46 +1,60 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { pb, Shop } from '@/lib/pocketbase';
 import { ShopCard } from '@/components/ShopCard';
 import { Navbar } from '@/components/Navbar';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 import styles from './page.module.scss';
 import utilStyles from '@/styles/utilities.module.scss';
 
-// Revalidate every 30 minutes (1800 seconds)
-export const revalidate = 1800;
+export default function ShopsPage() {
+  const { language } = useLanguage();
+  const [shops, setShops] = useState<Shop[]>([]);
+  const [loading, setLoading] = useState(true);
 
-// Text constants
-const PAGE_TITLE = 'Shops';
-const ERROR_LOADING_SHOPS = 'Error loading shops';
-const NO_SHOPS_FOUND = 'No shops found';
-const ADD_SHOPS_MESSAGE = 'Add shops through Pocketbase admin panel';
+  useEffect(() => {
+    const fetchShops = async () => {
+      try {
+        const records = await pb.collection('shops').getFullList<Shop>({
+          sort: '-created',
+        });
+        setShops(records);
+      } catch (error) {
+        console.error('Error loading shops:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-// Get shops on server side
-async function getShops(): Promise<Shop[]> {
-  try {
-    const records = await pb.collection('shops').getFullList<Shop>({
-      sort: '-created',
-    });
-    
-    return records;
-  } catch (error) {
-    console.error(`[ERROR] ${ERROR_LOADING_SHOPS}:`, error);
-    return [];
+    fetchShops();
+  }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <Navbar />
+        <main className={styles.main}>
+          <div className={utilStyles.emptyState}>
+            <p>{t(translations.common.loading, language)}</p>
+          </div>
+        </main>
+      </div>
+    );
   }
-}
-
-export default async function ShopsPage() {
-  const shops = await getShops();
 
   return (
     <div>
       <Navbar />
 
       <main className={styles.main}>
-        <h1 className={styles.pageTitle}>{PAGE_TITLE}</h1>
+        <h1 className={styles.pageTitle}>{t(translations.shops.title, language)}</h1>
         
         {shops.length === 0 ? (
           <div className={utilStyles.emptyState}>
-            <h2>{NO_SHOPS_FOUND}</h2>
-            <p>{ADD_SHOPS_MESSAGE}</p>
+            <h2>{t(translations.shops.noShops, language)}</h2>
           </div>
         ) : (
           <div className={styles.shopsGrid}>
@@ -53,7 +67,4 @@ export default async function ShopsPage() {
     </div>
   );
 }
-
-// Disable caching for dynamic content
-export const dynamic = 'force-dynamic';
 

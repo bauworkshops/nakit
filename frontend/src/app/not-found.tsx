@@ -1,19 +1,21 @@
-import Link from 'next/link';
+'use client';
 
-// Text constants
-const NOT_FOUND_CODE = '404';
-const PAGE_NOT_FOUND = 'Page not found';
-const BACK_TO_HOME = '← Return to home';
+import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/lib/translations';
+import { t } from '@/lib/i18nUtils';
 
 export default function NotFound() {
+  const { language } = useLanguage();
+
   return (
     <div className="container" style={{ textAlign: 'center', padding: '80px 20px' }}>
-      <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>{NOT_FOUND_CODE}</h1>
+      <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>404</h1>
       <h2 style={{ fontSize: '24px', marginBottom: '20px', color: 'var(--color-text)' }}>
-        {PAGE_NOT_FOUND}
+        {t(translations.common.notFound, language)}
       </h2>
       <Link href="/" className="back-link">
-        {BACK_TO_HOME}
+        {t(translations.common.backToHome, language)}
       </Link>
     </div>
   );
