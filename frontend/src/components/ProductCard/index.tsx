@@ -18,9 +18,15 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const productSlug = nameToSlug(product.title);
 
+  // Determine what info to display
+  const displayInfo = 
+    product.expand?.collection_id?.name || 
+    product.expand?.type_id?.name ||
+    (product.is_transformorable ? 'Transformable' : null);
+
   return (
-    <Link href={`/product/${productSlug}`} className={styles.card}>
-      <div className={`product-card ${styles.imageWrapper}`}>
+    <Link href={`/product/${productSlug}`} className={`product-card ${styles.card}`}>
+      <div className={styles.imageWrapper}>
         <Image
           src={imageUrl}
           alt={product.title}
@@ -30,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
         />
         <div className={styles.overlay}>
           <h3 className={styles.title}>{product.title}</h3>
-          <p className={styles.price}>{product.price.toLocaleString(LOCALE)} ₽</p>
+          {displayInfo && <p className={styles.info}>{displayInfo}</p>}
         </div>
       </div>
     </Link>

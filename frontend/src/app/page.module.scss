@@ -1,65 +1,373 @@
-// Home page styles (products grid)
+// Home page styles (products grid) - intelligent adaptive layouts
 
 .productsGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 360px;
   grid-auto-flow: dense;
-  gap: 0;
+  gap: 1px;
   width: 100%;
-  height: calc(100vh - 80px); // Full height minus navbar
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
   overflow-y: auto;
+  padding: 1px;
+}
 
-  // Variative sizing pattern - flat design with no gaps
+// COMPACT LAYOUT (≤15 items) - Spacious with large hero pieces
+.compact {
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(380px, auto);
+
   :global(.product-card) {
-    &:nth-child(7n+1) {
+    &:nth-child(1) {
       grid-column: span 2;
       grid-row: span 2;
     }
 
-    &:nth-child(7n+2) {
+    &:nth-child(2), &:nth-child(3) {
       grid-column: span 1;
       grid-row: span 2;
     }
 
-    &:nth-child(7n+3) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    &:nth-child(7n+4) {
+    &:nth-child(4) {
       grid-column: span 2;
       grid-row: span 1;
     }
 
-    &:nth-child(7n+5) {
+    &:nth-child(5), &:nth-child(6) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(7) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(8), &:nth-child(9) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(10) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(11) {
       grid-column: span 1;
       grid-row: span 2;
     }
 
-    &:nth-child(7n+6) {
+    &:nth-child(12) {
       grid-column: span 1;
       grid-row: span 1;
     }
 
-    &:nth-child(7n) {
+    &:nth-child(13) {
       grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(14), &:nth-child(15) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+}
+
+// BALANCED LAYOUT (16-30 items) - Mix of prominent and regular cards
+.balanced {
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(340px, auto);
+
+  :global(.product-card) {
+    &:nth-child(9n+1) {
+      grid-column: span 3;
+      grid-row: span 2;
+    }
+
+    &:nth-child(9n+2), &:nth-child(9n+3) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(9n+4) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(9n+5), &:nth-child(9n+6) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(9n+7) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(9n+8) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(9n) {
+      grid-column: span 1;
       grid-row: span 2;
     }
   }
 }
 
-@media (max-width: 1024px) {
-  .productsGrid {
+// DENSE LAYOUT (31-50 items) - Efficient with strategic emphasis
+.dense {
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(300px, auto);
+
+  :global(.product-card) {
+    &:nth-child(13n+1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(13n+2), &:nth-child(13n+3), &:nth-child(13n+4) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(13n+5) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(13n+6), &:nth-child(13n+7) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(13n+8) {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    &:nth-child(13n+9) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(13n+10), &:nth-child(13n+11) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(13n+12) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(13n) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+}
+
+// MOSAIC LAYOUT (50+ items) - Complex pattern for maximum interest
+.mosaic {
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(280px, auto);
+
+  :global(.product-card) {
+    &:nth-child(17n+1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(17n+2), &:nth-child(17n+3) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+4) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+5) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(17n+6), &:nth-child(17n+7) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+8) {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+9) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(17n+10) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+11) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    &:nth-child(17n+12), &:nth-child(17n+13) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+14) {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    &:nth-child(17n+15) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    &:nth-child(17n+16), &:nth-child(17n) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+}
+
+// RESPONSIVE BREAKPOINTS - Adapt all layouts to window size
+
+// Large Desktop (≤1600px)
+@media (max-width: 1600px) {
+  .compact {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(360px, auto);
+  }
+
+  .balanced {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(320px, auto);
+  }
+
+  .dense, .mosaic {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+  }
+}
+
+// Desktop (≤1280px)
+@media (max-width: 1280px) {
+  .compact {
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 240px;
+    grid-auto-rows: minmax(340px, auto);
+  }
+
+  .balanced, .dense {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(300px, auto);
+  }
+
+  .mosaic {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: minmax(260px, auto);
   }
 }
 
+// Tablet (≤1024px)
+@media (max-width: 1024px) {
+  .compact, .balanced {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(300px, auto);
+
+    :global(.product-card) {
+      &:nth-child(7n+1) {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      &:nth-child(7n+2) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      &:nth-child(7n+3), &:nth-child(7n+6) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      &:nth-child(7n+4) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      &:nth-child(7n+5) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      &:nth-child(7n) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+    }
+  }
+
+  .dense, .mosaic {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+
+    :global(.product-card) {
+      &:nth-child(8n+1) {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      &:nth-child(8n+2) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      &:nth-child(8n+3), &:nth-child(8n+4) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      &:nth-child(8n+5) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      &:nth-child(8n+6) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      &:nth-child(8n+7) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      &:nth-child(8n) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+  }
+}
+
+// Mobile (≤768px) - All layouts converge to similar pattern
 @media (max-width: 768px) {
-  .productsGrid {
+  .compact, .balanced, .dense, .mosaic {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 280px;
+    grid-auto-rows: minmax(260px, auto);
 
     :global(.product-card) {
       &:nth-child(5n+1) {
@@ -67,14 +375,47 @@
         grid-row: span 2;
       }
 
-      &:nth-child(5n+2),
-      &:nth-child(5n+3),
-      &:nth-child(5n+4),
+      &:nth-child(5n+2) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      &:nth-child(5n+3) {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      &:nth-child(5n+4) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
       &:nth-child(5n) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+    }
+  }
+}
+
+// Small Mobile (≤480px) - Simplified for smallest screens
+@media (max-width: 480px) {
+  .compact, .balanced, .dense, .mosaic {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(220px, auto);
+
+    :global(.product-card) {
+      &:nth-child(4n+1), &:nth-child(4n+3) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      &:nth-child(4n+2), &:nth-child(4n) {
         grid-column: span 1;
         grid-row: span 1;
       }
     }
   }
 }
+
 

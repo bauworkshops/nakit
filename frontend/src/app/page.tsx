@@ -18,7 +18,7 @@ async function getProducts(): Promise<Product[]> {
   try {
     const records = await pb.collection('products').getFullList<Product>({
       expand: 'collection_id,type_id,color_id',
-      sort: '-created',
+      sort: '-mainpage_order,-created',
     });
     return records;
   } catch (error) {
@@ -26,8 +26,17 @@ async function getProducts(): Promise<Product[]> {
   }
 }
 
+// Determine grid layout based on item count
+function getGridLayout(count: number): string {
+  if (count <= 15) return 'compact';
+  if (count <= 30) return 'balanced';
+  if (count <= 50) return 'dense';
+  return 'mosaic';
+}
+
 export default async function Home() {
   const products = await getProducts();
+  const layoutType = getGridLayout(products.length);
 
   return (
     <div>
@@ -40,7 +49,10 @@ export default async function Home() {
             <p>{ADD_PRODUCTS_MESSAGE}</p>
           </div>
         ) : (
-          <div className={styles.productsGrid}>
+          <div 
+            className={`${styles.productsGrid} ${styles[layoutType]}`}
+            data-count={products.length}
+          >
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

@@ -52,6 +52,7 @@ export interface Product {
   id: string;
   title: string;
   description?: string;
+  mainpage_order?: number;
   price: number;
   hidden?: boolean;
   preview_image?: string;
