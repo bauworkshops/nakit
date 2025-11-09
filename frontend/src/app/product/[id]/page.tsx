@@ -22,28 +22,45 @@ export default function ProductPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchProduct = async () => {
       try {
         const slug = params.id as string;
         const products = await pb.collection('products').getFullList<Product>({
           expand: 'collection_id,shop_ids,type_id,color_id',
+          requestKey: `product-${slug}`,
+          signal: abortController.signal,
         });
-        const foundProduct = products.find(p => nameToSlug(p.title) === slug.toLowerCase());
         
+        if (isCancelled) return;
+        
+        const foundProduct = products.find(p => nameToSlug(p.title) === slug.toLowerCase());
+        console.log('Found product:', foundProduct?.title);
         if (foundProduct) {
           setProduct(foundProduct);
         } else {
           setNotFound(true);
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading product:', error);
+        console.log('Product not found');
         setNotFound(true);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchProduct();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, [params.id]);
 
   if (loading) {

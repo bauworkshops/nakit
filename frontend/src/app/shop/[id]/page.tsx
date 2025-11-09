@@ -24,10 +24,19 @@ export default function ShopDetailPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    let isCancelled = false;
+    const abortController = new AbortController();
+
     const fetchShop = async () => {
       try {
         const slug = params.id as string;
-        const shops = await pb.collection('shops').getFullList<Shop>();
+        const shops = await pb.collection('shops').getFullList<Shop>({
+          requestKey: `shop-${slug}`,
+          signal: abortController.signal,
+        });
+        
+        if (isCancelled) return;
+        
         const foundShop = shops.find(s => nameToSlug(s.name) === slug.toLowerCase());
         
         if (foundShop) {
@@ -35,15 +44,23 @@ export default function ShopDetailPage() {
         } else {
           setNotFound(true);
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (isCancelled || error?.isAbort) return;
         console.error('Error loading shop:', error);
         setNotFound(true);
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchShop();
+
+    return () => {
+      isCancelled = true;
+      abortController.abort();
+    };
   }, [params.id]);
 
   if (loading) {
