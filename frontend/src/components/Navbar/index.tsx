@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Logo } from '../Logo';
 import styles from './index.module.scss';
@@ -15,12 +16,10 @@ const MENU_CONTACTS = 'Contacts';
 const ARIA_LABEL_MENU = 'Toggle menu';
 const ARIA_LABEL_CLOSE = 'Close menu';
 
-interface NavbarProps {
-  enhancedHover?: boolean;
-}
 
-export function Navbar({ enhancedHover = true }: NavbarProps) {
+export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   // Lock body scroll when sidebar is open
   useEffect(() => {
@@ -61,7 +60,7 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
             <li>
               <Link 
                 href="/catalogue" 
-                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+                className={clsx(styles.menuLink, {[styles.active]: pathname === '/catalogue'})}
               >
                 {MENU_CATALOGUE}
               </Link>
@@ -69,7 +68,7 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
             <li>
               <Link 
                 href="/collections" 
-                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+                className={clsx(styles.menuLink, {[styles.active]: pathname === '/collections'})}
               >
                 {MENU_COLLECTIONS}
               </Link>
@@ -77,7 +76,7 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
             <li>
               <Link 
                 href="/packaging" 
-                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+                className={clsx(styles.menuLink, {[styles.active]: pathname === '/packaging'})}
               >
                 {MENU_PACKAGING}
               </Link>
@@ -85,7 +84,7 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
             <li>
               <Link 
                 href="/shops" 
-                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+                className={clsx(styles.menuLink, {[styles.active]: pathname === '/shops'})}
               >
                 {MENU_SHOPS}
               </Link>
@@ -93,7 +92,7 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
             <li>
               <Link 
                 href="/contacts" 
-                className={clsx(styles.menuLink, enhancedHover && styles.menuLinkEnhanced)}
+                className={clsx(styles.menuLink, {[styles.active]: pathname === '/contacts'})}
               >
                 {MENU_CONTACTS}
               </Link>
@@ -176,27 +175,47 @@ export function Navbar({ enhancedHover = true }: NavbarProps) {
 
           <ul className={styles.sidebarMenu}>
             <li>
-              <Link href="/catalogue" className={styles.sidebarLink} onClick={closeMenu}>
+              <Link 
+                href="/catalogue" 
+                className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/catalogue'})} 
+                onClick={closeMenu}
+              >
                 {MENU_CATALOGUE}
               </Link>
             </li>
             <li>
-              <Link href="/collections" className={styles.sidebarLink} onClick={closeMenu}>
+              <Link 
+                href="/collections" 
+                className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/collections'})} 
+                onClick={closeMenu}
+              >
                 {MENU_COLLECTIONS}
               </Link>
             </li>
             <li>
-              <Link href="/packaging" className={styles.sidebarLink} onClick={closeMenu}>
+              <Link 
+                href="/packaging" 
+                className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/packaging'})} 
+                onClick={closeMenu}
+              >
                 {MENU_PACKAGING}
               </Link>
             </li>
             <li>
-              <Link href="/shops" className={styles.sidebarLink} onClick={closeMenu}>
+              <Link 
+                href="/shops" 
+                className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/shops'})} 
+                onClick={closeMenu}
+              >
                 {MENU_SHOPS}
               </Link>
             </li>
             <li>
-              <Link href="/contacts" className={styles.sidebarLink} onClick={closeMenu}>
+              <Link 
+                href="/contacts" 
+                className={clsx(styles.sidebarLink, {[styles.active]: pathname === '/contacts'})} 
+                onClick={closeMenu}
+              >
                 {MENU_CONTACTS}
               </Link>
             </li>

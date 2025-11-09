@@ -54,14 +54,6 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.2s ease;
-  
-  &:hover {
-    color: var(--color-text);
-  }
-}
-
-// Enhanced hover effect variant
-.menuLinkEnhanced {
   padding: 8px 16px;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -76,23 +68,21 @@
     bottom: 0;
     height: 3px;
     background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-    transform: scaleX(0);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 3px 3px 0 0;
   }
   
   &:hover {
     color: var(--color-primary);
-    background: var(--color-bg-light);
-    transform: translateY(-2px);
-
-    &::after {
-      transform: scaleX(1);
-    }
   }
 
-  &:active {
-    transform: translateY(0);
+  &.active {
+    color: var(--color-primary);
+
+    &::after {
+      opacity: 1;
+    }
   }
 }
 
@@ -307,6 +297,17 @@
 
   &:active {
     transform: scale(0.98);
+  }
+
+  &.active {
+    background: var(--color-bg-light);
+    color: var(--color-primary);
+    padding-left: 28px;
+    font-weight: 600;
+
+    &::before {
+      transform: scaleY(1);
+    }
   }
 }
 
