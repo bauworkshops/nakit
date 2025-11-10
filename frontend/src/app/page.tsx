@@ -80,7 +80,6 @@ export default function Home() {
         {products.length === 0 ? (
           <div className={utilStyles.emptyState}>
             <h2>{t(translations.home.noProducts, language)}</h2>
-            <p>{t(translations.home.addProducts, language)}</p>
           </div>
         ) : (
           <div 

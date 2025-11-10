@@ -91,11 +91,6 @@ export const translations = {
       rus: 'Продукты не найдены',
       srb: 'Proizvodi nisu pronađeni',
     },
-    addProducts: {
-      eng: 'Add products through Pocketbase admin panel',
-      rus: 'Добавьте продукты через панель администратора Pocketbase',
-      srb: 'Dodajte proizvode preko Pocketbase admin panela',
-    },
   },
 
   // Catalogue page
