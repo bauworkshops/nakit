@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { pb, Shop, getImageUrl } from '@/lib/pocketbase';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { GoogleMap } from '@/components/GoogleMap';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
@@ -168,6 +169,8 @@ export default function ShopDetailPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

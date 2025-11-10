@@ -391,6 +391,94 @@ export const translations = {
     rus: 'РУС',
     srb: 'СРБ',
   },
+
+  // Footer
+  footer: {
+    company: {
+      eng: 'Company',
+      rus: 'Компания',
+      srb: 'Kompanija',
+    },
+    catalogueDescription: {
+      eng: 'Jewelry catalogue for viewing products',
+      rus: 'Каталог ювелирных изделий для просмотра продукции',
+      srb: 'Katalog nakita za pregled proizvoda',
+    },
+    navigation: {
+      eng: 'Navigation',
+      rus: 'Навигация',
+      srb: 'Navigacija',
+    },
+    legal: {
+      eng: 'Legal',
+      rus: 'Юридическая информация',
+      srb: 'Pravne informacije',
+    },
+    legalInfo: {
+      eng: 'Legal Information',
+      rus: 'Юридическая информация',
+      srb: 'Pravne informacije',
+    },
+    privacyPolicy: {
+      eng: 'Privacy Policy',
+      rus: 'Политика конфиденциальности',
+      srb: 'Politika privatnosti',
+    },
+    termsOfUse: {
+      eng: 'Terms of Use',
+      rus: 'Условия использования',
+      srb: 'Uslovi korišćenja',
+    },
+    allRightsReserved: {
+      eng: 'All rights reserved.',
+      rus: 'Все права защищены.',
+      srb: 'Sva prava zadržana.',
+    },
+  },
+
+  // Legal pages
+  legal: {
+    legalInfoTitle: {
+      eng: 'Legal Information',
+      rus: 'Юридическая информация',
+      srb: 'Pravne informacije',
+    },
+    privacyTitle: {
+      eng: 'Privacy Policy',
+      rus: 'Политика конфиденциальности',
+      srb: 'Politika privatnosti',
+    },
+    termsTitle: {
+      eng: 'Terms of Use',
+      rus: 'Условия использования',
+      srb: 'Uslovi korišćenja',
+    },
+    lastUpdated: {
+      eng: 'Last updated',
+      rus: 'Последнее обновление',
+      srb: 'Poslednje ažurirano',
+    },
+    companyName: {
+      eng: 'Company Name',
+      rus: 'Название компании',
+      srb: 'Naziv kompanije',
+    },
+    registrationNumber: {
+      eng: 'Registration Number',
+      rus: 'Регистрационный номер',
+      srb: 'Matični broj',
+    },
+    taxId: {
+      eng: 'Tax ID (PIB)',
+      rus: 'ИНН (PIB)',
+      srb: 'PIB',
+    },
+    contactInfo: {
+      eng: 'Contact Information',
+      rus: 'Контактная информация',
+      srb: 'Kontakt informacije',
+    },
+  },
 };
 
 export function useTranslation() {

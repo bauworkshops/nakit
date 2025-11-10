@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { GoogleMap } from '@/components/GoogleMap';
 import { pb, Registry } from '@/lib/pocketbase';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -88,6 +89,7 @@ export default function ContactsPage() {
         <main className={styles.main}>
           <p>{t(translations.common.loading, language)}</p>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -139,6 +141,8 @@ export default function ContactsPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
