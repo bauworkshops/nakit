@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { pb, Product } from '@/lib/pocketbase';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { ProductImageGallery } from '@/components/ProductImageGallery';
 import { ProductInfo } from '@/components/ProductInfo';
 import { ProductMeta } from '@/components/ProductMeta';
@@ -125,6 +126,8 @@ export default function ProductPage() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
