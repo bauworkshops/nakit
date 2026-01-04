@@ -42,7 +42,10 @@ export function ProductListCard({ product }: ProductListCardProps) {
       </div>
       
       <div className={styles.content}>
-        <h3 className={styles.title}>{title}</h3>
+        <h3 className={styles.title}>
+          {type && <span className={styles.typeName}>{getLocalizedField(type, 'name', language)}</span>}
+          {title}
+        </h3>
         
         <div className={styles.details}>
           {collection && (
