@@ -33,7 +33,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--color-bg);
+  // background: var(--color-bg) url('/white_marble.png') repeat;
+  // background-size: auto;
   color: var(--color-text);
 }
 

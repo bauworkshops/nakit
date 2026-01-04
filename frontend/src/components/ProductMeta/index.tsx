@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 interface ProductMetaProps {
   collection?: { name: string };
   type?: { name: string };
-  color?: { name: string };
+  color?: { name: string; color?: string };
   isTransformable?: boolean;
   shops?: { id: string; name: string }[];
 }
@@ -53,6 +53,12 @@ export function ProductMeta({ collection, type, color, isTransformable, shops }:
           >
             {getLocalizedField(color, 'name', language)}
           </Link>
+          {color.color && (
+            <span 
+              className={styles.colorSwatch} 
+              style={{ backgroundColor: color.color }}
+            />
+          )}
         </div>
       )}
 

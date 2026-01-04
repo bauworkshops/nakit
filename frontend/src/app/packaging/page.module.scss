@@ -29,7 +29,6 @@
 
 .packagingItem {
   background: var(--color-white);
-  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.3s ease;
@@ -165,7 +164,6 @@
     code {
       background: var(--color-bg-light);
       padding: 0.2em 0.4em;
-      border-radius: 3px;
       font-family: 'Courier New', monospace;
       font-size: 0.9em;
       color: var(--color-text-dark);
@@ -174,7 +172,6 @@
     pre {
       background: var(--color-bg-light);
       padding: 1em;
-      border-radius: 5px;
       overflow-x: auto;
       margin-bottom: 1em;
 
@@ -245,7 +242,6 @@
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  border-radius: 4px;
   background: var(--color-bg-light);
 }
 

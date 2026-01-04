@@ -23,7 +23,7 @@ export function ProductInfo({ title, price, description, product }: ProductInfoP
   return (
     <div className={styles.info}>
       <h1 className={styles.title}>{localizedTitle}</h1>
-      <p className={styles.price}>{price.toLocaleString(LOCALE)} ₽</p>
+      <p className={styles.price}>{price.toLocaleString(LOCALE)} RSD</p>
       {localizedDescription && (
         <div>
           <p className={styles.description}>{localizedDescription}</p>

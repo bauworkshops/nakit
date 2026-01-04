@@ -1,6 +1,5 @@
 .filterContainer {
   background: var(--color-white);
-  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
@@ -20,7 +19,6 @@
 .filterWrapper {
   padding: 1rem;
   border: 2px solid transparent;
-  border-radius: 12px;
   transition: border-color 0.3s ease;
 }
 
@@ -46,7 +44,6 @@
   border: 2px solid var(--color-primary);
   color: var(--color-primary);
   padding: 0.4rem 0.875rem;
-  border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -88,7 +85,6 @@
 .select {
   padding: 0.5rem 0.75rem;
   border: 2px solid var(--color-border);
-  border-radius: 8px;
   font-size: 0.9375rem;
   color: var(--color-text);
   background: var(--color-white);
@@ -136,7 +132,6 @@
   min-width: 0; // Allow flex items to shrink below content size
   padding: 0.5rem 0.75rem;
   border: 2px solid var(--color-border);
-  border-radius: 8px;
   font-size: 0.9375rem;
   color: var(--color-text);
   transition: all 0.2s ease;
