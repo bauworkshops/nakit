@@ -10,7 +10,7 @@ import { ProductInfo } from '@/components/ProductInfo';
 import { ProductMeta } from '@/components/ProductMeta';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
-import { t } from '@/lib/i18nUtils';
+import { t, getLocalizedField } from '@/lib/i18nUtils';
 import { nameToSlug } from '@/lib/slugUtils';
 import styles from '../ProductDetail.module.scss';
 
@@ -91,6 +91,12 @@ export default function ProductPage() {
     ...(Array.isArray(product.images) ? product.images : [])
   ].filter(Boolean) as string[];
 
+  const type = product.expand?.type_id;
+  const typeName = type ? getLocalizedField(type, 'name', language) : '';
+  const productTitle = getLocalizedField(product, 'title', language);
+  const fullTitle = typeName ? `${typeName} ${productTitle}` : productTitle;
+  const productDescription = getLocalizedField(product, 'description', language);
+
   return (
     <div>
       <Navbar />
@@ -109,10 +115,9 @@ export default function ProductPage() {
 
           <div className={styles.detailsWrapper}>
             <ProductInfo
-              title={product.title}
+              title={fullTitle}
               price={product.price}
-              description={product.description}
-              product={product}
+              description={productDescription}
             />
 
             <ProductMeta

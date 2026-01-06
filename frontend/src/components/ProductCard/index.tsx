@@ -19,6 +19,8 @@ export function ProductCard({ product }: ProductCardProps) {
     ? getImageUrl('products', product.id, product.preview_image, '400x400')
     : '/placeholder.svg';
 
+  const type = product.expand?.type_id;
+  const typeName = type ? getLocalizedField(type, 'name', language) : '';
   const title = getLocalizedField(product, 'title', language);
   const productSlug = nameToSlug(product.title);
 
@@ -33,7 +35,10 @@ export function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 768px) 50vw, 33vw"
         />
         <div className={styles.overlay}>
-          <h3 className={styles.title}>{title}</h3>
+          <h3 className={styles.title}>
+            {typeName && <span className={styles.typeName}>{typeName}</span>}
+            {title}
+          </h3>
         </div>
       </div>
     </Link>
