@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { pb, Shop } from '@/lib/pocketbase';
 import { ShopCard } from '@/components/ShopCard';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
 import { t } from '@/lib/i18nUtils';
@@ -57,6 +58,7 @@ export default function ShopsPage() {
             <p>{t(translations.common.loading, language)}</p>
           </div>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -80,6 +82,8 @@ export default function ShopsPage() {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

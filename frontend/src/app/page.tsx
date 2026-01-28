@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { pb, Product } from '@/lib/pocketbase';
 import { ProductCard } from '@/components/ProductCard';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
 import { t } from '@/lib/i18nUtils';
@@ -66,6 +67,7 @@ export default function Home() {
             <p>{t(translations.common.loading, language)}</p>
           </div>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -92,6 +94,8 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

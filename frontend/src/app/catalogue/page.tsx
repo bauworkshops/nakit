@@ -6,6 +6,7 @@ import { pb, Product } from '@/lib/pocketbase';
 import { ProductListCard } from '@/components/ProductListCard';
 import { ProductFilter, FilterState } from '@/components/ProductFilter';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
 import { t } from '@/lib/i18nUtils';
@@ -221,6 +222,7 @@ export default function CataloguePage() {
             <p>{t(translations.catalogue.loadingProducts, language)}</p>
           </div>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -273,6 +275,8 @@ export default function CataloguePage() {
           </>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

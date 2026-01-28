@@ -27,7 +27,9 @@ export default function RootLayout({
     <html lang={SITE_LANG}>
       <body>
         <LanguageProvider>
-          {children}
+          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            {children}
+          </div>
         </LanguageProvider>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { pb, Packaging, getImageUrl } from '@/lib/pocketbase';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translations } from '@/lib/translations';
 import { t, getLocalizedField } from '@/lib/i18nUtils';
@@ -119,6 +120,8 @@ export default function PackagingPage() {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }

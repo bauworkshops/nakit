@@ -75,6 +75,12 @@ export interface Product {
   type_id?: string;
   color_id?: string;
   is_transformorable?: boolean;
+  material_composition?: string;
+  material_composition_rus?: string;
+  material_composition_srb?: string;
+  safety_info?: string;
+  safety_info_rus?: string;
+  safety_info_srb?: string;
   created: string;
   updated: string;
   // Расширенные данные из связей
