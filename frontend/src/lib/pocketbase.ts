@@ -100,6 +100,18 @@ export interface Packaging {
   updated: string;
 }
 
+/** ID коллекций для /api/files (имя коллекции в URL не работает) — см. pb_schema.json */
+const FILE_COLLECTION_IDS: Record<string, string> = {
+  products: 'mno345product67',
+  product_collections: 'def456collect78',
+  shops: 'jkl012shops3456',
+  packaging: 'stu901packag123',
+};
+
+function resolveCollectionIdForFiles(collectionIdOrName: string): string {
+  return FILE_COLLECTION_IDS[collectionIdOrName] ?? collectionIdOrName;
+}
+
 // Утилита для получения URL изображения
 export function getImageUrl(
   collectionId: string,
@@ -108,10 +120,11 @@ export function getImageUrl(
   thumb?: string
 ): string {
   if (!filename) return '';
-  
+
   const baseUrl = process.env.NEXT_PUBLIC_POCKETBASE_URL || 'http://127.0.0.1:8090';
   const params = thumb ? `?thumb=${thumb}` : '';
-  
-  return `${baseUrl}/api/files/${collectionId}/${recordId}/${filename}${params}`;
+  const resolvedId = resolveCollectionIdForFiles(collectionId);
+
+  return `${baseUrl}/api/files/${resolvedId}/${recordId}/${filename}${params}`;
 }
 

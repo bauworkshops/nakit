@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Доступ к dev-серверу с хоста Windows по WSL-IP
+  allowedDevOrigins: ['localhost', '127.0.0.1', '172.19.163.251', '10.255.255.254'],
   images: {
+    // Локальный PocketBase (127.0.0.1 / WSL IP) — только в dev
+    ...(process.env.NODE_ENV === 'development'
+      ? { dangerouslyAllowLocalIP: true }
+      : {}),
     remotePatterns: [
       {
         protocol: 'http',
