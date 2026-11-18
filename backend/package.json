@@ -7,7 +7,7 @@
     "setup": "node scripts/setup-schema.js"
   },
   "dependencies": {
-    "pocketbase": "^0.21.1"
+    "pocketbase": "^0.29.0"
   }
 }
 

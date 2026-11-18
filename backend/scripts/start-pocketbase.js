@@ -13,7 +13,7 @@ if (!fs.existsSync(pbPath)) {
 
 console.log('🚀 Запуск Pocketbase...');
 
-const pb = spawn(pbPath, ['serve', '--http=127.0.0.1:8090'], {
+const pb = spawn(pbPath, ['serve', '--http=0.0.0.0:8090'], {
   cwd: path.join(__dirname, '..'),
   stdio: 'inherit'
 });

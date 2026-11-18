@@ -72,7 +72,14 @@ dist-ssr
 *.local
 /volumes
 
-# Pocketbase
+# PocketBase (schema: backend/pb_schema.json — keep tracked)
 backend/pocketbase
-backend/pb_data
-backend/pb_migrations
+backend/pb_data/
+backend/pb_data*/
+backend/pb_migrations/
+backend/pb_migrations*/
+*.db
+*.db-shm
+*.db-wal
+pb_backup_*.zip
+**/pb_backup_*.zip
